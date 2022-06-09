@@ -22,5 +22,16 @@
 	  select * from tbl_member 
 	  where userid=#{userid} and userpw=#{userpw}
 	</select>
+
+	<update id="update">
+		update tbl_member 
+		set username=#{username}, useremail=#{useremail}, updatedate=now() 
+		where userid=#{userid} and userpw=#{userpw}
+	</update>	
+	
+	<delete id="delete">
+		delete from tbl_member 
+		where userid=#{userid} and userpw=#{userpw}
+	</delete>
 	
 </mapper>

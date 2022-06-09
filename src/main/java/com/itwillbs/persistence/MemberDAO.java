@@ -18,4 +18,10 @@ public interface MemberDAO {
 	
 	// 로그인2
 	public MemberVO loginMember(String userid, String userpw);
+	
+	// 회원 정보 수정(이름, 이메일, 수정일)
+	public Integer updateMember(MemberVO vo);
+	
+	// 회원 정보 삭제
+	public void deleteMember(MemberVO vo);
 }

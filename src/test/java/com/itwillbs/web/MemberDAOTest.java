@@ -101,4 +101,36 @@ public class MemberDAOTest {
 			log.info("로그인 실패!");
 		}
 	} // 로그인2()
+	
+	@Test
+	public void 회원정보_수정하기() {
+		
+		// 수정할 정보 저장
+		MemberVO vo = new MemberVO();
+		vo.setUserid("itwill01");
+		vo.setUserpw("1234");
+
+		// 수정데이터
+		vo.setUsername("학생01(수정)");
+		vo.setUseremail("itwill01@naver.com(수정)");
+		
+		// dao 객체
+		dao.updateMember(vo);
+		
+	} // 회원정보_수정하기()
+	
+	
+	@Test
+	public void 회원관리_삭제() {
+		
+		// 삭제할 정보
+		MemberVO dvo = new MemberVO();
+		dvo.setUserid("itwill01");
+		dvo.setUserpw("1234");
+		
+		// dao 객체
+		dao.deleteMember(dvo);
+		
+	} // 회원관리_삭제()
+	
 }

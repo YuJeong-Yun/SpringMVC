@@ -63,7 +63,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 
 	@Override
-	public MemberVO loginMember(MemberVO vo) {
+	public MemberVO loginMember(MemberVO vo) { // 로그인
 		
 		logger.info("loginMember() 동작 호출");
 		
@@ -77,7 +77,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 
 	@Override
-	public MemberVO loginMember(String userid, String userpw) {
+	public MemberVO loginMember(String userid, String userpw) { // 로그인
 		
 		// userid, userpw는 vo에 저장 불가능한 상황(가정)
 		// sqlSession.selectOne(NAMESPACE+".", userid, userpw);
@@ -90,6 +90,29 @@ public class MemberDAOImpl implements MemberDAO {
 		logger.info(paramMap.toString());
 		
 		return sqlSession.selectOne(NAMESPACE+".login", paramMap);
-	}
+	} // loginMember()
+
+
+	@Override
+	public Integer updateMember(MemberVO vo) { // 회원 정보 수정
+		
+		logger.info("회원 정보 수정 동착 호출");
+
+		int resultCnt = sqlSession.update(NAMESPACE+".update", vo);
+		
+		return resultCnt;
+	} // updateMember()
+
+
+	@Override
+	public void deleteMember(MemberVO vo) { // 회원 정보 삭제
+		
+		logger.info("회원 정보 삭제 동작 호출");
+		
+		sqlSession.delete(NAMESPACE+".delete", vo);
+		
+	} // deleteMember()
+	
+	
 
 }
