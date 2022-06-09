@@ -48,19 +48,57 @@ public class MemberDAOTest {
 		System.out.println(dao.getMemberCnt());
 	}
 
+//	@Test
+//	public void 회원가입() {
+//		MemberVO vo = new MemberVO();
+//		vo.setUserid("itwill01");
+//		vo.setUserpw("1234");
+//		vo.setUsername("학생01");
+//		vo.setUseremail("itwill@naver.com");
+//
+//		log.info("회원가입 정보 : " + vo);
+//
+//		dao.insertMember(vo);
+//		
+//		log.info("회원가입 완료@@@@");
+//	} // 회원가입()
+	
 	@Test
-	public void 회원가입() {
-		MemberVO vo = new MemberVO();
-		vo.setUserid("itwill01");
-		vo.setUserpw("1234");
-		vo.setUsername("학생01");
-		vo.setUseremail("itwill@naver.com");
-
-		log.info("회원가입 정보 : " + vo);
-
-		dao.insertMember(vo);
+	public void 로그인() {
+		String userid = "itwill01";
+		String userpw = "1234";
 		
-		log.info("회원가입 완료@@@@");
-	}
+		MemberVO loginVO = new MemberVO();
+		loginVO.setUserid(userid);
+		loginVO.setUserpw(userpw);
+		
+		log.info("로그인 정보 저장완료");
+		log.info("DAO 메서드 호출 ");
+		
+		MemberVO resultVO =  dao.loginMember(loginVO);
+		
+		log.info("로그인 체크완료! ");
+		
+		if(resultVO != null) { 
+			log.info("로그인 성공");
+		} else {
+			log.info("로그인 실패!");
+		}
+	} // 로그인()
 
+	@Test
+	public void 로그인2() {
+		String userid = "admin";
+		String userpw = "1234";
+		
+		// VO 객체 X => 2개의 정보가 하나의 vo안에 저장이 불가능한 경우
+		// => 하나의 vo안에 저장되는 정보가 있다면 vo에 담아서 처리
+		MemberVO resultVO = dao.loginMember(userid, userpw);
+		
+		if(resultVO != null) { 
+			log.info("로그인 성공");
+		} else {
+			log.info("로그인 실패!");
+		}
+	} // 로그인2()
 }

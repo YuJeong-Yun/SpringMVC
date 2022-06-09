@@ -12,15 +12,19 @@
 
 	<!-- DataSource객체 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<!-- <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property> -->
-		<property name="driverClassName">
-			<value>com.mysql.cj.jdbc.Driver</value>
-		</property>
-		<property name="url" value="jdbc:mysql://localhost:3306/springdb" />
+	
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+		<property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/springdb" />
+		
+		<!--  log4j 적용 X -->
+<!-- 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" /> -->
+<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/springdb" /> -->
+		
 		<property name="username" value="root" />
 		<property name="password" value="1234" />
 	</bean>
 	<!-- DataSource객체 -->
+	
 	
 	<!-- SqlSessionFactory 객체 (디비연결, SQL 처리) -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

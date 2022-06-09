@@ -1,5 +1,8 @@
 package com.itwillbs.persistence;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -57,5 +60,36 @@ public class MemberDAOImpl implements MemberDAO {
 		logger.info("회원가입 완료!!! ");
 		
 	} // insertMember()
+
+
+	@Override
+	public MemberVO loginMember(MemberVO vo) {
+		
+		logger.info("loginMember() 동작 호출");
+		
+		MemberVO resultVO =  sqlSession.selectOne(NAMESPACE+".login", vo);
+		
+		logger.info("로그인 체크완료, "+resultVO);
+		logger.info("테스트 파일로 이동");
+		
+		return resultVO;
+	} // loginMember()
+
+
+	@Override
+	public MemberVO loginMember(String userid, String userpw) {
+		
+		// userid, userpw는 vo에 저장 불가능한 상황(가정)
+		// sqlSession.selectOne(NAMESPACE+".", userid, userpw);
+		// Map을 사용하여 key, value 쌍으로 저장
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("userid", userid);
+		paramMap.put("userpw", userpw);
+		
+		logger.info(paramMap.toString());
+		
+		return sqlSession.selectOne(NAMESPACE+".login", paramMap);
+	}
 
 }
