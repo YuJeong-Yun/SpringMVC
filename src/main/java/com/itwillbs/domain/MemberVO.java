@@ -12,6 +12,20 @@ public class MemberVO {
 	private Date regdate;
 	private Date updateDate;
 
+	public MemberVO() {
+
+	}
+
+	public MemberVO(String userid, String userpw, String username, String useremail, Date regdate, Date updateDate) {
+//		super(); // 상속관계의 부모객체 호출(부모 객체 생성)
+		this.userid = userid;
+		this.userpw = userpw;
+		this.username = username;
+		this.useremail = useremail;
+		this.regdate = regdate;
+		this.updateDate = updateDate;
+	}
+
 	public String getUserid() {
 		return userid;
 	}
