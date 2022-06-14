@@ -14,7 +14,7 @@ public class SampleController1 {
 	
 	// 메서드의 리턴타입이 void일 때 해당주소.jsp 페이지 호출
 	
-	// http://localhost:8088/web/doA.me
+	// http://localhost:8088/web/doA
 	// http://localhost:8088/web/doA1
 	// http://localhost:8088/web/doA2
 	
