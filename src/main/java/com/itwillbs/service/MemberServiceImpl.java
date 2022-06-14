@@ -41,4 +41,17 @@ public class MemberServiceImpl implements MemberService {
 		return loginResultVO;
 	}
 
+	
+	@Override
+	public MemberVO getMemberInfo(String userid) {
+		log.info("getMemberInfo(id) 호출");
+		
+		// DAO 객체 메서드 호출
+		MemberVO memberVO = dao.getMember(userid);
+		
+		log.info(memberVO+"");
+		
+		return memberVO;
+	}
+
 }

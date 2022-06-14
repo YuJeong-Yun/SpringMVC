@@ -15,11 +15,18 @@
 	
 
 	<c:if test="${id == null}">
-		<c:redirect url="/member/login" />
+		<c:redirect url="${pageContext.request.contextPath }/member/login" />
 	</c:if>
 	
 	
 	<input type="button" value="로그아웃" onclick="location.href='/member/logout';" >	
+	
+	
+	<h3><a href="/member/info">회원정보 조회</a></h3>
+	<h3>회원정보 수정</h3>
+	<h3>회원정보 삭제</h3>
+	<h3>회원정보 목록 조회</h3>
+	
 	
 </body>
 </html>

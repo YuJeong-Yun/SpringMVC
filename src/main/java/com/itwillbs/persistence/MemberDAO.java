@@ -24,4 +24,7 @@ public interface MemberDAO {
 	
 	// 회원 정보 삭제
 	public void deleteMember(MemberVO vo);
+	
+	// 회원 정보 조회
+	public MemberVO getMember(String userid);
 }

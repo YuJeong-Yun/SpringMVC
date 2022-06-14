@@ -34,4 +34,9 @@
 		where userid=#{userid} and userpw=#{userpw}
 	</delete>
 	
+	<select id="getMember" resultType="com.itwillbs.domain.MemberVO">
+		select * from tbl_member 
+		where userid=#{userid}
+	</select>
+	
 </mapper>

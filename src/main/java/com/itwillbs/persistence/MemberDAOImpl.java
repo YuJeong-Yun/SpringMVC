@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import com.itwillbs.domain.MemberVO;
 import com.itwillbs.web.HomeController;
 
+import sun.util.resources.cldr.ext.CurrencyNames_es_PE;
+
 // @Repository : 해당 클래스를 DAO로 스프링에서 인식하도록 하는 표시
 @Repository
 public class MemberDAOImpl implements MemberDAO {
@@ -112,6 +114,16 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.delete(NAMESPACE+".delete", vo);
 		
 	} // deleteMember()
+
+
+	@Override
+	public MemberVO getMember(String userid) { // 회원 정보 조회
+		logger.info("회원 정보 조회 동작 호출");
+		 
+		MemberVO memberVO = sqlSession.selectOne(NAMESPACE+".getMember", userid);
+		
+		return memberVO;
+	} // getMember()
 	
 	
 

@@ -12,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.itwillbs.domain.MemberVO;
 import com.itwillbs.service.MemberService;
+import com.mysql.cj.Session;
 
 @Controller
 @RequestMapping("/member/*")
@@ -116,12 +118,33 @@ public class MemberController {
 	// http://localhost:8088/member/logout
 	// 로그아웃
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String logout(HttpSession session) {
+	public String logoutGET(HttpSession session) {
 		log.info("logoutGET() 호출 ");
 		
-		session.removeAttribute("id");
+		// 로그아웃 => 세션정보 초기화
+		session.invalidate();
 		
-		return "redirect:/member/login";
+		return "redirect:/member/main";
+	}
+	
+	
+	// http://localhost:8088/member/info
+	// 회원정보 조회
+	@RequestMapping(value="/info", method = RequestMethod.GET)
+	public String infoGET(HttpSession session) {
+		log.info("infoGET() 호출");
+		
+		// 아이디 값 가져오기
+		String id = (String) session.getAttribute("id");
+		
+		// 아이디 값에 해당하는 회원정보 모두 조회 -> 서비스 동작 호출
+		MemberVO memberVO = service.getMemberInfo(id);
+		
+		
+		// 가져온 회원정보 확인
+		log.info(memberVO+"");
+		
+		return "/member/info";
 	}
 
 }

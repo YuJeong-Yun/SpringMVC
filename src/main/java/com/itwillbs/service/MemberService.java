@@ -9,4 +9,7 @@ public interface MemberService {
 	
 	// 로그인
 	public MemberVO loginCheck(MemberVO vo);
+	
+	// 회원정보 조회
+	public MemberVO getMemberInfo(String userid);
 }
