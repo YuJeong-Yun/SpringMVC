@@ -1,6 +1,6 @@
 package com.itwillbs.web;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -9,14 +9,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.itwillbs.domain.MemberVO;
 import com.itwillbs.service.MemberService;
-import com.mysql.cj.Session;
 
 @Controller
 @RequestMapping("/member/*")
@@ -131,20 +129,103 @@ public class MemberController {
 	// http://localhost:8088/member/info
 	// 회원정보 조회
 	@RequestMapping(value="/info", method = RequestMethod.GET)
-	public String infoGET(HttpSession session) {
+	public void infoGET(HttpSession session, Model model) {
 		log.info("infoGET() 호출");
 		
 		// 아이디 값 가져오기
 		String id = (String) session.getAttribute("id");
 		
 		// 아이디 값에 해당하는 회원정보 모두 조회 -> 서비스 동작 호출
-		MemberVO memberVO = service.getMemberInfo(id);
+		MemberVO vo = service.getMemberInfo(id);
 		
 		
 		// 가져온 회원정보 확인
-		log.info(memberVO+"");
+		log.info(vo+"");
 		
-		return "/member/info";
+		//DB에서 전달받은 정보를 view 페이지로 전달
+		//model.addAttribute("memberVO", vo);
+		model.addAttribute(vo);
 	}
+	
+	// http://localhost:8088/member/update
+	// 회원정보 수정
+	@RequestMapping(value="/update", method=RequestMethod.GET)
+	public String updateGET(HttpSession session, Model model) {
+		log.info("updateGET() 호출");
+		
+		String id = (String) session.getAttribute("id");
+		
+//		MemberVO vo = service.getMemberInfo(id);
+//		log.info(vo+"");
+//		
+//		model.addAttribute(vo);
+		model.addAttribute(service.getMemberInfo(id));
+		
+		return "/member/updateForm";
+	}
+	
+	
+	// 회원정보 수정
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public String udpatePOST(MemberVO vo) {
+		// 수정할 정보를 저장(전달)
+		log.info("수정 데이터 : "+vo);
+		
+		// 서비스 - 정보 수정동작 호출
+		int result = service.updateMember(vo);
+		
+		if(result !=1) {
+			return "redirect:/member/update";
+		}
+		
+		// 페이지 이동(main)
+		return "redirect:/member/main";
+	}
+	
+	
+	// http://localhost:8088/member/delete
+	// 회원정보 삭제
+	@RequestMapping(value="/delete", method=RequestMethod.GET)
+	public String deleteGET() {
+		log.info("deleteGET() 호출");
+		
+		return "/member/deleteForm";
+		
+	}
+	
+	// 회원정보 삭제
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	public String deletePOST(HttpSession session, MemberVO vo) {
+		log.info("deletePOST() 호출");
+		log.info(vo+"");
+		
+		String id = (String) session.getAttribute("id");
+		vo.setUserid(id);
+		
+		service.deleteMember(vo);
+		session.invalidate();
+		
+		return "redirect:/member/main";
+	}
+	
+	
+	// 회원정보 목록보기
+	@RequestMapping(value="/list", method=RequestMethod.GET)
+	public String listGET(HttpSession session, Model model) {
+		// 로그인 세션처리
+		String id = (String)session.getAttribute("id");
+		if(id == null || !id.equals("admin") ) {
+			return "redirect:/member/main";
+		}
+		
+		// 서비스 - 회원정보 목록을 조회하는 동작
+		List<MemberVO> memberList =  service.getMemberList(id);
+		
+		// 정보를 저장 - view 페이지로 전달
+		model.addAttribute(memberList);
 
+		// 페이지 이동
+
+		return "/member/list";
+	}
 }

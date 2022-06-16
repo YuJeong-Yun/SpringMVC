@@ -39,4 +39,9 @@
 		where userid=#{userid}
 	</select>
 	
+	<select id="memberList" resultType="MemberVO">
+		select * from tbl_member 
+		where userid != #{userid} 
+	</select>
+	
 </mapper>

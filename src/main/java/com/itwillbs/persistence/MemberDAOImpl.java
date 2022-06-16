@@ -1,6 +1,8 @@
 package com.itwillbs.persistence;
 
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -11,9 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.MemberVO;
-import com.itwillbs.web.HomeController;
 
-import sun.util.resources.cldr.ext.CurrencyNames_es_PE;
 
 // @Repository : 해당 클래스를 DAO로 스프링에서 인식하도록 하는 표시
 @Repository
@@ -124,7 +124,20 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		return memberVO;
 	} // getMember()
+
 	
-	
+
+	@Override
+	public List<MemberVO> getMemberList(String adminID) {
+		
+		logger.info(" getMemberList(String adminID) 호출 ");
+		
+		// mapper에 해당 sql구문 호출
+		// => mapper결과를 List형태로 리턴하겠다
+		//List memberList = sqlSession.selectList(adminID, adminID);
+		//return memberList;
+		
+		return sqlSession.selectList(NAMESPACE+".memberList", adminID);
+	}
 
 }

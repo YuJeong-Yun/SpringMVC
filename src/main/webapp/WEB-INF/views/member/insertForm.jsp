@@ -7,7 +7,20 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	function check() {
-		alert("유효성 체크 완료");
+		const fr = document.fr;
+		if(fr.userid.value == "") {
+			alert("아이디를 입력하세요");
+			return false;
+		}else if(fr.userpw.value == "") {
+			alert("비밀번호를 입력하세요.");
+			return false;
+		}else if(fr.username.value == "") {
+			alert("이름을 입력하세요.");
+			return false;
+		}else if(fr.useremail.value == "") {
+			alert("이메일을 입력하세요.");
+			return false;
+		}
 	}
 </script>
 </head>
@@ -17,7 +30,7 @@
 	<h2>회원가입</h2>
 	
 	<fieldset>
-		<form action="/member/insert" method="post" onsubmit="check();">
+		<form action="/member/insert" method="post" name="fr" onsubmit="return check();">
 			아이디 : <input type="text" name="userid"><br> 
 			비밀번호 : <input type="password" name="userpw"><br> 
 			이름 : <input type="text" name="username"><br>

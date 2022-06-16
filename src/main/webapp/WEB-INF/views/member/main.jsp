@@ -23,10 +23,13 @@
 	
 	
 	<h3><a href="/member/info">회원정보 조회</a></h3>
-	<h3>회원정보 수정</h3>
-	<h3>회원정보 삭제</h3>
-	<h3>회원정보 목록 조회</h3>
+	<h3><a href="/member/update">회원정보 수정</a></h3>
+	<h3><a href="/member/delete">회원정보 삭제</a></h3>
 	
+	<c:if test="${id == 'admin' }">
+		<h3><a href="/member/list">회원정보 목록 조회</a></h3>
+	</c:if>
+
 	
 </body>
 </html>
